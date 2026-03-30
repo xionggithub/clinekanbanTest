@@ -1,16 +1,21 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { Spin } from 'antd'
 import MainLayout from './layouts/MainLayout'
-import Home from './pages/Home'
-import About from './pages/About'
+
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
 
 function App() {
   return (
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<Spin size="large" style={{ display: 'block', margin: '120px auto' }} />}>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Route>
+      </Routes>
+    </Suspense>
   )
 }
 
